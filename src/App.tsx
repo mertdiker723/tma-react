@@ -1,5 +1,4 @@
-import axios from "axios"
-import { Suspense, useEffect } from "react"
+import { Suspense } from "react"
 import { Route, BrowserRouter, Routes, Navigate } from "react-router"
 
 // Core
@@ -10,13 +9,6 @@ import Navbar from "./components/navbar"
 
 
 const App = () => {
-
-  useEffect(() => {
-    axios.get('/task')
-      .then(res => console.log(res.data))
-      .catch(err => console.log(err))
-  }, [])
-
   return (
     <BrowserRouter>
       <Suspense fallback={<div>Loading...</div>}>

@@ -10,7 +10,7 @@ import {
 
 } from '@mui/material';
 
-const pages = ['Home', 'Task'];
+const pages = ['Home', 'Task', 'Dashboard'];
 const uerPages = ['Login', 'Register'];
 
 function Navbar() {
