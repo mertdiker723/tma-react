@@ -4,14 +4,14 @@ import { useNavigate } from 'react-router';
 
 
 // Material UI
-import { Table, TableBody, TableCell, TableContainer, TableRow, Paper, Container, Button, CircularProgress, Box, Alert } from '@mui/material';
-import CircleIcon from '@mui/icons-material/Circle';
+import { Table, TableContainer, Paper, Container, CircularProgress, Box, Alert } from '@mui/material';
 
 // Core
 import ITask from '../../core/models/task';
 
 // Components
 import TableHeadWrapper from '../../components/task/TableHeadWrapper';
+import TableBodyWrapper from '../../components/task/TableBodyWrapper';
 
 // Styles
 import "./Style.scss";
@@ -63,42 +63,7 @@ const Dashboard = () => {
                         <TableContainer component={Paper}>
                             <Table aria-label="simple table">
                                 <TableHeadWrapper head={["Title", "Description", "Status"]} />
-                                <TableBody>
-                                    {tasks?.map((row) => {
-                                        const { _id, title, description, status } = row || {};
-                                        return (
-                                            <TableRow
-                                                key={_id}
-                                                sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-                                            >
-                                                <TableCell component="th" scope="row">
-                                                    {title}
-                                                </TableCell>
-                                                <TableCell>{description}</TableCell>
-                                                <TableCell><CircleIcon sx={{ color: status ? 'green' : "red" }} /></TableCell>
-                                                <TableCell align="right">
-                                                    <Button
-                                                        variant="contained"
-                                                        color="success"
-                                                        type='button'
-                                                        onClick={() => editTask(_id)}>
-                                                        Update
-                                                    </Button>
-                                                    <Button
-                                                        variant="contained"
-                                                        color="error"
-                                                        type='button'
-                                                        sx={{ marginLeft: 2 }}
-                                                        onClick={() => deleteTask(_id)}>
-                                                        Delete
-                                                    </Button>
-                                                </TableCell>
-
-                                            </TableRow>
-                                        )
-                                    })}
-                                </TableBody>
-
+                                <TableBodyWrapper deleteTask={deleteTask} editTask={editTask} tasks={tasks} />
                             </Table>
                         </TableContainer>
                     )
