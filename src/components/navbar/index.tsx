@@ -15,7 +15,7 @@ import {
 import { LOGIN, REGISTER } from '../../core/router/RoutesUrl';
 import { getToken } from '../../lib/auth';
 
-const pages = ['Home', 'Task', 'Dashboard'];
+const pages = ['Home', 'Task'];
 
 const Navbar = () => {
     const [userId, setUserId] = useState<string | null>(null);
@@ -43,16 +43,19 @@ const Navbar = () => {
             <Container maxWidth="xl">
                 <Toolbar disableGutters>
                     <Box sx={{ flexGrow: 1, display: { md: 'flex' } }}>
-                        {pages.map((page) => (
-                            <Button
-                                key={page}
-                                sx={{ my: 2, color: 'white', display: 'block' }}
-                                component={Link}
-                                to={`/${page.toLowerCase()}`}
-                            >
-                                {page}
-                            </Button>
-                        ))}
+                        {pages.map((page) => {
+                            const isActive = location.pathname === `/${page.toLowerCase()}`;
+                            return (
+                                <Button
+                                    key={page}
+                                    sx={{ my: 2, mr: 1, color: 'white', backgroundColor: isActive ? 'rgba(255, 255, 255, 0.2)' : 'transparent' }}
+                                    component={Link}
+                                    to={`/${page.toLowerCase()}`}
+                                >
+                                    {page}
+                                </Button>
+                            );
+                        })}
                     </Box>
 
                     <Box sx={{ flexGrow: 0, display: 'flex' }}>

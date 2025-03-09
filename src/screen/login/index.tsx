@@ -1,6 +1,6 @@
 import { useActionState, useEffect } from "react";
 import { useNavigate } from "react-router";
-import { Alert, Button, Container, TextField } from "@mui/material";
+import { Alert, Button, Container, TextField, Typography } from "@mui/material";
 import Grid from '@mui/material/Grid2';
 
 
@@ -12,6 +12,7 @@ import { submitForm } from "../../components/login/action";
 const Login = () => {
     const [stateItem, formAction, isPending] = useActionState(submitForm, undefined);
     const navigate = useNavigate();
+
     useEffect(() => {
         const { data, token } = stateItem || {};
 
@@ -21,14 +22,15 @@ const Login = () => {
                 navigate('/');
             }, 0);
         }
-    }, [stateItem, navigate])
-    console.log(stateItem);
-
+    }, [stateItem, navigate]);
 
     return (
         <Container className="login__container">
             <form className="form-control" action={formAction}>
                 <Grid container spacing={2} className="grid-wrapper">
+                    <Grid size={{ xs: 12 }}>
+                        <Typography variant="h6">TMA - Login</Typography>
+                    </Grid>
                     <Grid size={{ xs: 12 }}>
                         <TextField
                             id="outlined-basic"

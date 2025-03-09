@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router";
 import { useActionState, useEffect } from "react";
-import { Alert, Button, Container, TextField } from "@mui/material"
+import { Alert, Button, Container, TextField, Typography } from "@mui/material"
 import Grid from '@mui/material/Grid2';
 
 // Components
@@ -29,6 +29,9 @@ const Register = () => {
         <Container className="register__container">
             <form className="form-control" action={formAction}>
                 <Grid container spacing={2} className="grid-wrapper">
+                    <Grid size={{ xs: 12 }}>
+                        <Typography variant="h6">TMA - Register</Typography>
+                    </Grid>
                     <Grid size={{ xs: 12 }}>
                         <TextField
                             id="outlined-basic"

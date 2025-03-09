@@ -3,7 +3,10 @@ import { useEffect, useReducer } from "react";
 import { useNavigate } from "react-router";
 
 // Material UI
-import { Table, TableContainer, Paper, Container, Box, CircularProgress, Alert } from "@mui/material";
+import { Table, TableContainer, Paper, Container, Box, CircularProgress, Alert, Button } from "@mui/material";
+
+// Icons
+import SendIcon from '@mui/icons-material/Send';
 
 // Core
 import ITask from "../../core/models/task";
@@ -56,8 +59,7 @@ const Home = () => {
 
     const deleteTask = (id: string) => {
         axios.delete(`/task/${id}`)
-            .then(res => {
-                console.log(res);
+            .then(() => {
                 setState({
                     tasks: tasks.filter(task => task._id !== id)
                 })
@@ -73,9 +75,13 @@ const Home = () => {
         navigate(`/task/${id}`);
     }
 
+    const addTask = () => {
+        navigate('/task');
+    }
 
     return (
         <Container className="home__table-container">
+            <Button type="button" onClick={addTask} variant="contained" sx={{ mb: 2 }} endIcon={<SendIcon />}>Add Task</Button>
             {
                 isLoading ? (
                     <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '200px' }}>
