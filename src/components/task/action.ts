@@ -24,8 +24,9 @@ export async function submitForm(_prevState: unknown, formData: FormData) {
                 status: !id ? false : status,
             });
         }
-        const { task } = res?.data || {};
-        return { data: task, success: true };
+        const { data } = res?.data || {};
+        
+        return { data, success: true };
     } catch (error) {
         if (axios.isAxiosError(error)) {
             const { data } = error?.response || {};
