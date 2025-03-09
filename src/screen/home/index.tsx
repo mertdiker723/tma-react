@@ -1,6 +1,5 @@
 import axios from "axios";
 import { useEffect, useReducer } from "react";
-import { jwtDecode } from "jwt-decode";
 import { useNavigate } from "react-router";
 
 // Material UI
@@ -34,22 +33,18 @@ const Home = () => {
         loginUserId: null
     });
     const navigate = useNavigate();
-    const token = getToken();
+    const { id } = getToken();
     const { tasks, error, isLoading, loginUserId } = state;
 
     useEffect(() => {
         axios.get('/alltask')
             .then(res => {
                 setState({ tasks: res?.data?.data });
-                if (token) {
-                    try {
-                        const { id }: { id: string } = jwtDecode(token);
-                        setState({ loginUserId: id });
-                    } catch {
-                        setState({ loginUserId: null });
-                    }
+                if (id) {
+                    setState({ loginUserId: id });
+                    return;
                 }
-
+                setState({ loginUserId: null });
             })
             .catch((err) => {
                 setState({ error: err?.message });
@@ -57,7 +52,7 @@ const Home = () => {
             ).finally(() => {
                 setState({ isLoading: false });
             });
-    }, [token]);
+    }, [id]);
 
     const deleteTask = (id: string) => {
         axios.delete(`/task/${id}`)

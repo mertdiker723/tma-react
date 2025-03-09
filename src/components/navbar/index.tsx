@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router';
-import { jwtDecode } from 'jwt-decode';
 
 // MU - Components
 import {
@@ -22,20 +21,15 @@ const Navbar = () => {
     const [userId, setUserId] = useState<string | null>(null);
     const location = useLocation()
     const navigate = useNavigate();
-    const token = getToken();
+    const { id } = getToken();
 
     useEffect(() => {
-        if (token) {
-            try {
-                const { id }: { id: string } = jwtDecode(token);
-                setUserId(id);
-            } catch {
-                setUserId(null);
-            }
-        } else {
-            setUserId(null);
+        if (id) {
+            setUserId(id)
+            return;
         }
-    }, [token]);
+        setUserId(null);
+    }, [id]);
 
     const logoutHandler = () => {
         localStorage.removeItem('token');
