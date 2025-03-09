@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router";
 import { useActionState } from "react";
 import { Button, Container, TextField } from "@mui/material"
 import Grid from '@mui/material/Grid2';
@@ -7,10 +8,11 @@ import { submitForm } from "../../components/register/action";
 
 // Styles
 import "./Style.scss"
-import Toastify from "../../common/Toastify";
 
 const Register = () => {
-    const [stateItem, formAction, isPending] = useActionState(submitForm, undefined);
+    const [, formAction, isPending] = useActionState(submitForm, undefined);
+    const navigate = useNavigate();
+
     return (
         <Container className="register__container">
             <form className="form-control" action={formAction}>
@@ -47,12 +49,11 @@ const Register = () => {
                     <Grid size={{ xs: 12 }}>
                         <Button loading={isPending} fullWidth variant="contained" type="submit">Register</Button>
                     </Grid>
+                    <Grid size={{ xs: 12 }}>
+                        <Button onClick={() => navigate("/login")} fullWidth variant="outlined" type="button">Back to Login</Button>
+                    </Grid>
                 </Grid>
             </form>
-            <Toastify
-                data={stateItem?.data}
-                message="User created"
-            />
         </Container>
     )
 }

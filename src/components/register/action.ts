@@ -8,7 +8,7 @@ export async function submitForm(_prevState: unknown, formData: FormData) {
     const password = formData.get("password") as string;
 
     try {
-        const res = await axios.post("/user", {
+        const res = await axios.post("/user/register", {
             userName,
             email,
             password

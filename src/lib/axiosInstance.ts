@@ -1,7 +1,7 @@
 import axios from 'axios';
-const apiRoute = 'https://backend-igbd.onrender.com/api'
-// const localRoute = 'http://localhost:3000/api'
-axios.defaults.baseURL = apiRoute;
+// const apiRoute = 'https://backend-igbd.onrender.com/api'
+const localRoute = 'http://localhost:3000/api'
+axios.defaults.baseURL = localRoute;
 
 axios.interceptors.request.use(
     (config) => {

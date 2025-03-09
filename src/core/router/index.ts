@@ -11,26 +11,31 @@ const routers = [
         id: 1,
         path: '/home',
         component: Home,
+        authenticated: true
     },
     {
         id: 2,
         path: '/task/:id?',
         component: Task,
+        authenticated: true
     },
     {
         id: 3,
         path: '/login',
-        component: Login
+        component: Login,
+        authenticated: false
     },
     {
         id: 4,
         path: '/dashboard',
-        component: Dashboard
+        component: Dashboard,
+        authenticated: true
     },
     {
         id: 5,
         path: '/register',
-        component: Register
+        component: Register,
+        authenticated: false
     }
 ]
 
