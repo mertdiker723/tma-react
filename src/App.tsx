@@ -6,12 +6,13 @@ import routers from "./core/router"
 
 // Components
 import Navbar from "./components/navbar"
+import { LinearProgress } from "@mui/material"
 
 
 const App = () => {
   return (
     <BrowserRouter>
-      <Suspense fallback={<div>Loading...</div>}>
+      <Suspense fallback={<LinearProgress />}>
         <Navbar />
         <Routes>
           <Route path="/" element={<Navigate to="/home" />} />

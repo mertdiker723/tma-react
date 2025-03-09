@@ -2,7 +2,8 @@
 
 import axios from "axios";
 
-export async function submitForm(prevState: unknown, formData: FormData) {
+export async function submitForm(_prevState: unknown, formData: FormData) {
+    
     const id = formData.get("id") as string | null;
     const title = formData.get("title") as string;
     const description = formData.get("description") as string;

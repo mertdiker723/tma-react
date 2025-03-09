@@ -4,6 +4,7 @@ const Home = lazy(() => import('../../screen/home'));
 const Task = lazy(() => import('../../screen/task'));
 const Login = lazy(() => import('../../screen/login'));
 const Dashboard = lazy(() => import('../../screen/dashboard'));
+const Register = lazy(() => import('../../screen/register'));
 
 const routers = [
     {
@@ -25,6 +26,11 @@ const routers = [
         id: 4,
         path: '/dashboard',
         component: Dashboard
+    },
+    {
+        id: 5,
+        path: '/register',
+        component: Register
     }
 ]
 

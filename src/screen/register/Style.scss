@@ -1,0 +1,15 @@
+.register__container {
+  margin-top: 30px;
+
+  .form-control {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    .grid-wrapper {
+      display: flex;
+      justify-content: center;
+      flex-direction: column;
+    }
+  }
+}
