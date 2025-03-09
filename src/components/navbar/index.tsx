@@ -45,7 +45,9 @@ const Navbar = () => {
                 <Toolbar disableGutters>
                     <Box sx={{ flexGrow: 1, display: { md: 'flex' } }}>
                         {pages.map((page) => {
-                            const isActive = location.pathname === `/${page.toLowerCase()}`;
+                            const pathname = location?.pathname;
+                            const rootPath = pathname?.split('/')[1];                          
+                            const isActive = rootPath === page?.toLowerCase();
                             return (
                                 <Button
                                     key={page}

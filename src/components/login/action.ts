@@ -11,11 +11,14 @@ export async function submitForm(_prevState: unknown, formData: FormData) {
             email,
             password
         });
+        const { user, token, message } = res?.data || {};
 
-        return { message: res?.data?.message, data: res?.data?.data, token: res?.data.token, success: true };
+        return { message: message, data: user, token, success: true };
     } catch (error) {
         if (axios.isAxiosError(error)) {
-            return { message: error.response?.data?.message, token: null, data: null, success: false };
+            const { data } = error?.response || {};
+            const { message } = data || {};
+            return { message: message, token: null, data: null, success: false };
         } else {
             return { message: "An error happened!", token: null, data: null, success: false };
         }

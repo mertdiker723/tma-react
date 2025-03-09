@@ -3,7 +3,7 @@
 import axios from "axios";
 
 export async function submitForm(_prevState: unknown, formData: FormData) {
-    
+
     const id = formData.get("id") as string | null;
     const title = formData.get("title") as string;
     const description = formData.get("description") as string;
@@ -24,8 +24,15 @@ export async function submitForm(_prevState: unknown, formData: FormData) {
                 status: !id ? false : status,
             });
         }
-        return { data: res?.data?.data, success: true };
-    } catch {
-        return { message: "There was an error submitting the form!", data: null, success: false };
+        const { task } = res?.data || {};
+        return { data: task, success: true };
+    } catch (error) {
+        if (axios.isAxiosError(error)) {
+            const { data } = error?.response || {};
+            const { message } = data || {};
+            return { message: message, token: null, data: null, success: false };
+        } else {
+            return { message: "An error happened!", token: null, data: null, success: false };
+        }
     }
 }
