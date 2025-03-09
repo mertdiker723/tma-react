@@ -29,7 +29,8 @@ const Dashboard = () => {
                 setTasks(res?.data?.data);
             })
             .catch((err) => {
-                setError(err?.message);
+                const message = err?.response?.data?.message || 'An error occurred';
+                setError(message);
             }
             ).finally(() => {
                 setIsLoading(false);

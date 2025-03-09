@@ -1,6 +1,6 @@
 import { useActionState, useEffect } from "react";
 import { useNavigate } from "react-router";
-import { Button, Container, TextField } from "@mui/material";
+import { Alert, Button, Container, TextField } from "@mui/material";
 import Grid from '@mui/material/Grid2';
 
 
@@ -12,14 +12,18 @@ import { submitForm } from "../../components/login/action";
 const Login = () => {
     const [stateItem, formAction, isPending] = useActionState(submitForm, undefined);
     const navigate = useNavigate();
-
     useEffect(() => {
         const { data, token } = stateItem || {};
 
         if (data && token) {
             localStorage.setItem("token", token);
+            setTimeout(() => {
+                navigate('/');
+            }, 0);
         }
-    }, [stateItem])
+    }, [stateItem, navigate])
+    console.log(stateItem);
+
 
     return (
         <Container className="login__container">
@@ -32,6 +36,7 @@ const Login = () => {
                             name="email"
                             placeholder="Enter email"
                             type="email"
+                            autoComplete="on"
                             required
                         />
                     </Grid>
@@ -51,6 +56,13 @@ const Login = () => {
                     <Grid size={{ xs: 12 }}>
                         <Button onClick={() => navigate("/register")} fullWidth variant="outlined" type="button">Register</Button>
                     </Grid>
+                    {
+                        !stateItem?.success && stateItem?.message && (
+                            <Grid size={{ xs: 12 }}>
+                                <Alert sx={{ mt: 2 }} severity="error">{stateItem?.message}</Alert>
+                            </Grid>
+                        )
+                    }
                 </Grid>
             </form>
         </Container>

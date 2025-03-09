@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router";
-import { useActionState } from "react";
-import { Button, Container, TextField } from "@mui/material"
+import { useActionState, useEffect } from "react";
+import { Alert, Button, Container, TextField } from "@mui/material"
 import Grid from '@mui/material/Grid2';
 
 // Components
@@ -10,8 +10,20 @@ import { submitForm } from "../../components/register/action";
 import "./Style.scss"
 
 const Register = () => {
-    const [, formAction, isPending] = useActionState(submitForm, undefined);
+    const [stateItem, formAction, isPending] = useActionState(submitForm, undefined);
     const navigate = useNavigate();
+
+    useEffect(() => {
+        const { data, token } = stateItem || {};
+
+        if (data && token) {
+            localStorage.setItem("token", token);
+            setTimeout(() => {
+                navigate('/');
+            }, 0);
+        }
+    }, [stateItem, navigate])
+
 
     return (
         <Container className="register__container">
@@ -52,6 +64,13 @@ const Register = () => {
                     <Grid size={{ xs: 12 }}>
                         <Button onClick={() => navigate("/login")} fullWidth variant="outlined" type="button">Back to Login</Button>
                     </Grid>
+                    {
+                        !stateItem?.success && stateItem?.message && (
+                            <Grid size={{ xs: 12 }}>
+                                <Alert sx={{ mt: 2 }} severity="error">{stateItem?.message}</Alert>
+                            </Grid>
+                        )
+                    }
                 </Grid>
             </form>
         </Container>

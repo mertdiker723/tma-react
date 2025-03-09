@@ -13,7 +13,11 @@ export async function submitForm(_prevState: unknown, formData: FormData) {
         });
 
         return { message: res?.data?.message, data: res?.data?.data, token: res?.data.token, success: true };
-    } catch {
-        return { message: "There was an error submitting the form!", token: null, data: null, success: false };
+    } catch (error) {
+        if (axios.isAxiosError(error)) {
+            return { message: error.response?.data?.message, token: null, data: null, success: false };
+        } else {
+            return { message: "An error happened!", token: null, data: null, success: false };
+        }
     }
 }

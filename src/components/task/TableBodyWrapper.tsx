@@ -7,14 +7,21 @@ type TableBodyWrapperProps = {
     tasks: ITask[];
     editTask: (id: string) => void;
     deleteTask: (id: string) => void;
-    disableButtons?: boolean;
+    loginUserId?: string | null;
 }
 
-const TableBodyWrapper = ({ tasks, editTask, deleteTask, disableButtons = false }: TableBodyWrapperProps) => {
+const TableBodyWrapper = ({ tasks, editTask, deleteTask, loginUserId }: TableBodyWrapperProps) => {
+    const authorizationButtons = (userId: string) => {
+        if (!loginUserId) {
+            return false
+        }
+        return userId !== loginUserId
+    }
     return (
         <TableBody>
             {tasks?.map((row) => {
-                const { _id, title, description, status } = row || {};
+                const { _id, title, description, status, userId } = row || {};
+
                 return (
                     <TableRow
                         key={_id}
@@ -30,7 +37,7 @@ const TableBodyWrapper = ({ tasks, editTask, deleteTask, disableButtons = false 
                                 variant="contained"
                                 color="success"
                                 type='button'
-                                disabled={disableButtons}
+                                disabled={authorizationButtons(userId)}
                                 onClick={() => editTask(_id)}>
                                 Update
                             </Button>
@@ -39,7 +46,7 @@ const TableBodyWrapper = ({ tasks, editTask, deleteTask, disableButtons = false 
                                 color="error"
                                 type='button'
                                 sx={{ marginLeft: 2 }}
-                                disabled={disableButtons}
+                                disabled={authorizationButtons(userId)}
                                 onClick={() => deleteTask(_id)}>
                                 Delete
                             </Button>

@@ -5,7 +5,11 @@ axios.defaults.baseURL = localRoute;
 
 axios.interceptors.request.use(
     (config) => {
-        config.url = `${axios.defaults.baseURL}${config.url}`;
+        const token = localStorage.getItem('token') || "";
+        if (token) {
+            config.headers.Authorization = `Bearer ${token}`;
+        }
+        config.headers['Content-Type'] = 'application/json';
         return config;
     },
     (error) => Promise.reject(error)

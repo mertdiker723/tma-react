@@ -1,4 +1,6 @@
+import { useEffect, useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router';
+import { jwtDecode } from 'jwt-decode';
 
 // MU - Components
 import {
@@ -9,23 +11,38 @@ import {
     Button,
 
 } from '@mui/material';
+
 // Core
-import { DASHBOARD, HOME, TASK } from '../../core/router/RoutesUrl';
+import { LOGIN, REGISTER } from '../../core/router/RoutesUrl';
+import { getToken } from '../../lib/auth';
 
 const pages = ['Home', 'Task', 'Dashboard'];
 
-function Navbar() {
+const Navbar = () => {
+    const [userId, setUserId] = useState<string | null>(null);
     const location = useLocation()
     const navigate = useNavigate();
+    const token = getToken();
 
-    if (![HOME, TASK, DASHBOARD].includes(location.pathname)) return null;
+    useEffect(() => {
+        if (token) {
+            try {
+                const { id }: { id: string } = jwtDecode(token);
+                setUserId(id);
+            } catch {
+                setUserId(null);
+            }
+        } else {
+            setUserId(null);
+        }
+    }, [token]);
 
     const logoutHandler = () => {
         localStorage.removeItem('token');
-        setTimeout(() => {
-            navigate('/login');
-        }, 0);
+        navigate('/login');
     }
+
+    if (!userId || [LOGIN, REGISTER].includes(location.pathname)) return null;
 
     return (
         <AppBar position="static">
