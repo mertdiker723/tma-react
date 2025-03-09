@@ -8,6 +8,7 @@ import {
     Toolbar,
     Container,
     Button,
+    Typography,
 
 } from '@mui/material';
 
@@ -21,7 +22,7 @@ const Navbar = () => {
     const [userId, setUserId] = useState<string | null>(null);
     const location = useLocation()
     const navigate = useNavigate();
-    const { id } = getToken();
+    const { id, email, isAdmin } = getToken();
 
     useEffect(() => {
         if (id) {
@@ -57,7 +58,12 @@ const Navbar = () => {
                             );
                         })}
                     </Box>
+                    <Box>
+                        <Typography variant='h6' component='div' sx={{ flexGrow: 1 }}>
+                            {email} - {isAdmin ? 'Admin' : 'User'} |
+                        </Typography>
 
+                    </Box>
                     <Box sx={{ flexGrow: 0, display: 'flex' }}>
                         <Button
                             sx={{ my: 2, color: 'white', display: 'block' }}

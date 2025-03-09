@@ -8,15 +8,20 @@ type TableBodyWrapperProps = {
     editTask: (id: string) => void;
     deleteTask: (id: string) => void;
     loginUserId?: string | null;
+    isUserAdmin?: boolean;
 }
 
-const TableBodyWrapper = ({ tasks, editTask, deleteTask, loginUserId }: TableBodyWrapperProps) => {
+const TableBodyWrapper = ({ tasks, editTask, deleteTask, loginUserId, isUserAdmin = false }: TableBodyWrapperProps) => {
     const authorizationButtons = (userId: string) => {
+        if (isUserAdmin) {
+            return false
+        }
         if (!loginUserId) {
             return false
         }
         return userId !== loginUserId
     }
+    
     return (
         <TableBody>
             {tasks?.map((row) => {

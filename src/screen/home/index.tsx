@@ -36,7 +36,7 @@ const Home = () => {
         loginUserId: null
     });
     const navigate = useNavigate();
-    const { id } = getToken();
+    const { id, isAdmin } = getToken();
     const { tasks, error, isLoading, loginUserId } = state;
 
     useEffect(() => {
@@ -92,7 +92,7 @@ const Home = () => {
                         <TableContainer component={Paper}>
                             <Table aria-label="simple table">
                                 <TableHeadWrapper head={["Title", "Description", "Status"]} />
-                                <TableBodyWrapper deleteTask={deleteTask} editTask={editTask} tasks={tasks} loginUserId={loginUserId} />
+                                <TableBodyWrapper deleteTask={deleteTask} editTask={editTask} tasks={tasks} loginUserId={loginUserId} isUserAdmin={isAdmin} />
                             </Table>
                         </TableContainer>
                     )

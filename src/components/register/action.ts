@@ -6,12 +6,14 @@ export async function submitForm(_prevState: unknown, formData: FormData) {
     const userName = formData.get("userName") as string;
     const email = formData.get("email") as string;
     const password = formData.get("password") as string;
+    const status = formData.get("status") === "on";
 
     try {
         const res = await axios.post("/user/register", {
             userName,
             email,
-            password
+            password,
+            isAdmin: status
         });
 
         return { message: "User created", data: res?.data?.data, token: res?.data.token, success: true };

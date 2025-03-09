@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router";
-import { useActionState, useEffect } from "react";
-import { Alert, Button, Container, TextField, Typography } from "@mui/material"
+import { useActionState, useEffect, useState } from "react";
+import { Alert, Button, Checkbox, Container, FormControlLabel, TextField, Typography } from "@mui/material"
 import Grid from '@mui/material/Grid2';
 
 // Components
@@ -11,6 +11,7 @@ import "./Style.scss"
 
 const Register = () => {
     const [stateItem, formAction, isPending] = useActionState(submitForm, undefined);
+    const [status, setState] = useState<boolean>(false);
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -59,6 +60,12 @@ const Register = () => {
                             type="password"
                             placeholder="Enter password"
                             required
+                        />
+                    </Grid>
+                    <Grid size={{ xs: 12 }} className="checkbox-field">
+                        <FormControlLabel
+                            control={<Checkbox name="status" checked={status} onChange={(e) => setState(e.target.checked)} />}
+                            label="Register, as admin user!"
                         />
                     </Grid>
                     <Grid size={{ xs: 12 }}>

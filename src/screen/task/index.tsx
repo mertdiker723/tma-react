@@ -38,14 +38,18 @@ const Task = () => {
         error: null,
         loading: false
     });
-    const { title, description, status, loading } = state || {};
+    const { title, description, status, loading, error } = state || {};
 
     useEffect(() => {
+        setState({
+            error: null
+        })
         if (stateItem?.success && stateItem?.data) {
             setState({
                 title: stateItem.data.title,
                 description: stateItem.data.description,
-                status: stateItem.data.status
+                status: stateItem.data.status,
+                error: null
             });
         }
     }, [id, stateItem]);
@@ -66,8 +70,10 @@ const Task = () => {
                     })
                 })
                 .catch((err) => {
+                    const { message } = err?.response?.data || {};
+
                     setState({
-                        error: err?.message
+                        error: message
                     })
                 }).finally(() => {
                     setState({
@@ -124,14 +130,20 @@ const Task = () => {
                                 type="submit"
                                 color={id ? 'success' : 'primary'}
                                 defaultChecked={status}
+                                disabled={Boolean(error)}
                                 endIcon={<SendIcon />}
                                 fullWidth
                             >
                                 {id ? 'Update' : 'Add'} Task
                             </Button>
                         </Grid>
+                        {
+                            (error || (!stateItem?.success && stateItem?.message)) && <Alert sx={{ mt: 2 }} severity="error">{stateItem?.message || error}</Alert>
+                        }
+                        <Grid size={{ xs: 12 }}>
+
+                        </Grid>
                     </Grid>
-                    {!stateItem?.success && stateItem?.message && <Alert sx={{ mt: 2 }} severity="error">{stateItem?.message}</Alert>}
                 </form>
             }
 
